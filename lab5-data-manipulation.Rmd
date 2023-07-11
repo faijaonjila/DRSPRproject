@@ -1,0 +1,74 @@
+---
+---
+---
+
+Lab#4\
+\
+`filter()`
+
+```{r}
+dssalaries
+
+filter(dssalaries, company_location == "US" )
+USemployees <- filter(dssalaries, company_location == "US" )
+```
+
+`is.na()`
+
+```{r}
+filter(dssalaries, is.na(salary))
+filter(dssalaries, is.na(remote_ratio))
+filter(dssalaries, is.na(company_location))
+filter(dssalaries, is.na(company_size))
+filter(dssalaries, is.na(employee_residence))
+filter(dssalaries, is.na(salary_currency))
+filter(dssalaries, is.na(job_title))
+filter(dssalaries, is.na(employment_type))
+filter(dssalaries, is.na(experience_level))
+filter(dssalaries, is.na(salary_in_usd))
+filter(dssalaries, is.na(work_year))
+```
+
+`select()`
+
+```{r}
+select(dssalaries, salary, salary_in_usd, salary_currency )
+```
+
+`mutate()`
+
+```{r}
+dssalaries_money <- select(dssalaries, salary, salary_in_usd, salary_currency)
+dssalaries_money
+mutate(dssalaries_money,
+       salary_m = salary/100,
+       salary_in_usd_m = salary_in_usd / 100)
+```
+
+`summarize()`
+
+```{r}
+summarize(dssalaries,
+          mean_salary = mean(salary) ,
+          count = n(),
+          .by = job_title)
+```
+
+`arrange()`
+
+```{r}
+arrange(dssalaries, salary)
+arrange(dssalaries, salary, salary_currency)
+```
+
+```{r}
+library(ggplot2)
+
+mutate(dssalaries_money,
+       salary_m = salary/100,
+       salary_in_usd_m = salary_in_usd / 100)
+
+ggplot(data = dssalaries, aes( x = experience_level )) + 
+  geom_bar() +
+  labs( x = "experience level", title = "Data Science Career")
+```
